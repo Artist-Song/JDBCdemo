@@ -32,18 +32,11 @@ public class DepartmentsDAO {
 			list.add(d);
 			d.setDeptName(name);
 			d.setDeptNo(no);
-			
-			
-			
-			System.out.println(no+":"+name);
+//			System.out.println(no+":"+name);
 		}
-	
-		
-		
-		// TODO
-		
-		return list;
-		
+
+		// TOD
+		return list	;
 	}
 	
 	/**
@@ -61,26 +54,34 @@ public class DepartmentsDAO {
 		Connection conn = null;
 		Statement stat = null;
 
-//		conn = DBConnection.getConnection();
-//		stat = conn.createStatement();
-//		ResultSet rs = stat.executeQuery("insert ");
-
+		conn = DBConnection.getConnection();
+		stat = conn.createStatement();
+		String sql="insert into departments(dept_no,dept_name) values ('"+deptNo+"','"+deptName+"');";
+		stat.executeUpdate(sql);
+		stat.close();
+		conn.close();
 		// TODO
 	}
 	
 	/**
 	 * 删除
 	 * @param dept
+	 * @throws SQLException 
 	 */
-	public void delete(Departments dept) {
+	public void delete(Departments dept) throws SQLException {
 		
 		String deptNo = dept.getDeptNo();
 		assert deptNo != null;
 		
 		Connection conn = null;
-		PreparedStatement stat = null;
-
+		Statement stat = null;
+		System.out.println(deptNo);
 		conn = DBConnection.getConnection();
+		stat = conn.createStatement();
+		String sql="delete from departments  where dept_no= '"+deptNo+"';"; 
+		stat.executeUpdate(sql);
+		stat.close();
+		conn.close();
 		
 		// TODO
 	}
@@ -88,8 +89,9 @@ public class DepartmentsDAO {
 	/**
 	 * 修改
 	 * @param dept
+	 * @throws SQLException 
 	 */
-	public void update(Departments dept) {
+	public void update(Departments dept) throws SQLException {
 		
 		String deptNo = dept.getDeptNo();
 		String deptName = dept.getDeptName();
@@ -97,9 +99,15 @@ public class DepartmentsDAO {
 		assert deptName != null;
 		
 		Connection conn = null;
-		PreparedStatement stat = null;
+		Statement stat = null;
+		
 
 		conn = DBConnection.getConnection();
+		stat = conn.createStatement();
+		String sql = "update departments set dept_name = '"+deptName+"' where dept_no = '"+deptNo+"';";
+		stat.execute(sql);		
+		stat.close();
+		conn.close();
 
 		// TODO
 	}
@@ -114,11 +122,22 @@ public class DepartmentsDAO {
 		assert deptNo != null;
 		
 		Connection conn = null;
-		PreparedStatement stat = null;
+		Statement stat = null;
 		ResultSet rs = null;
 		Departments dept = new Departments(); 
-
+		
 		conn = DBConnection.getConnection();
+		stat = conn.createStatement();
+		rs = stat.executeQuery("select emp_no from dept_emp where  dept_emp.dept_no = '"+deptNo+"';");
+		while (rs.next()) {
+			String no = rs.getString("emp_no");
+			
+			
+			
+				System.out.println(no);
+		}
+
+		
 		
 		
 		// TODO

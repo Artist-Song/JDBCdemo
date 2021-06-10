@@ -222,7 +222,12 @@ public class Main implements ActionListener {
 				String deptNo = tfDeptNo.getText();
 				Departments dept = new Departments();
 				dept.setDeptNo(deptNo);
-				deptDAO.delete(dept);
+				try {
+					deptDAO.delete(dept);
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(jFrame, "删除成功");
 				try {
 					updateLstDeptList();
@@ -239,7 +244,12 @@ public class Main implements ActionListener {
 				Departments dept = new Departments();
 				dept.setDeptNo(tfDeptNo.getText());
 				dept.setDeptName(tfDeptName.getText());
-				deptDAO.update(dept);
+				try {
+					deptDAO.update(dept);
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(jFrame, "修改成功");
 				try {
 					updateLstDeptList();
